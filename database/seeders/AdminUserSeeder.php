@@ -10,6 +10,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class AdminUserSeeder extends Seeder
 {
+    use WithoutModelEvents;
     /**
      * Run the database seeds.
      */
@@ -23,7 +24,7 @@ class AdminUserSeeder extends Seeder
             'name' => 'Super Admin',
             'email' => 'sample@gmail.com',
             'user_type' => 'SuperAdmin',
-             'role_id' => $AdminRole->id,
+            'role_id' => $AdminRole->id,
             'password' => Hash::make('password'),
         ]);
         $AdminUser->assignRole($AdminRole);

@@ -60,32 +60,6 @@
         </li>
       @endcan
 
-      {{-- Admission Request --}}
-
-      @can('view enrollment')
-        <li class="nav-item {{ active_class(['enrollment.index', 'enrollment.create', 'enrollment.edit']) }}">
-          <a href="#" class="nav-link mb-3 rounded-md">
-            <span class="rounded-full flex items-center justify-center ml-[10px]">
-              <i class="fas fa-book-reader"></i>
-            </span>
-            <span class="link-title font-[500]">Enrollment</span>
-          </a>
-        </li>
-      @endcan
-
-
-      {{-- Contact Request --}}
-      @can('view contact')
-        <li class="nav-item {{ active_class(['contact.index', 'contact.create', 'contact.edit']) }}">
-          <a href="#" class="nav-link mb-3 rounded-md">
-            <span class="rounded-full flex items-center justify-center  ml-[10px]">
-              <i class="fas fa-phone"></i>
-            </span>
-            <span class="link-title font-[500]">Contact Us</span>
-          </a>
-        </li>
-      @endcan
-
       {{-- Role --}}
       @can('view role')
         <li class="nav-item {{ active_class(['roles.index', 'roles.create', 'roles.edit', 'show.assign.role.form']) }}">
@@ -93,7 +67,7 @@
             <span class="rounded-full flex items-center justify-center  ml-[10px]">
               <i class="fas fa-user-shield"></i>
             </span>
-            <span class="link-title font-[500]">Role</span>
+            <span class="link-title font-[500]">Role & Permission</span>
           </a>
         </li>
       @endcan
@@ -109,21 +83,6 @@
           </a>
         </li>
       @endif
-
-
-      {{-- Login --}}
-
-      <li class="nav-item">
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline nav-link mb-3 rounded-md">
-          @csrf
-          <button type="submit" class="nav-link border-0 bg-transparent p-0 cursor-pointer">
-            <span class="rounded-full flex items-center justify-center ml-[10px]">
-              <i class="fas fa-sign-out-alt"></i>
-            </span>
-            <span class="link-title font-[500]">Logout</span>
-          </button>
-
-        </form>
       </li>
     </ul>
 
