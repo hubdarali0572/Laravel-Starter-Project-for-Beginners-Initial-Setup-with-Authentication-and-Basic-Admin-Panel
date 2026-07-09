@@ -1,132 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Reset Password</title>
-
-    <!-- Tailwind CSS CDN -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password | Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style> body { font-family: 'Inter', sans-serif; } </style>
 </head>
-<body class="min-h-screen bg-gray-100 flex items-center justify-center px-4">
 
-    <div class="w-full max-w-md bg-white shadow-lg p-8">
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900 flex items-center justify-center p-4">
 
-        <!-- Logo -->
-        <div class="flex justify-center mb-6">
-            <img src="{{ asset('assets/images/others/anzway-logo.png') }}"
-                 alt="Finance Advisory Logo"
-                 class="h-16 object-contain">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8">
+        <div class="flex flex-col items-center mb-6">
+            <span class="flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-white text-xl shadow-lg shadow-indigo-600/30 mb-4">
+                <i class="fas fa-lock-open"></i>
+            </span>
+            <h1 class="text-xl font-bold text-slate-900">Reset Password</h1>
+            <p class="text-sm text-slate-500 text-center mt-2">Choose a new password for your account.</p>
         </div>
 
-        <!-- Heading -->
-        <h1 class="text-2xl font-semibold text-center text-gray-800 mb-6">
-            Reset Password
-        </h1>
-
-        <form method="POST" action="{{ route('password.store') }}" class="space-y-5">
+        <form method="POST" action="{{ route('password.store') }}" class="space-y-4">
             @csrf
-
-            <!-- Reset Token -->
             <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-            <!-- Email -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                    Email Address
-                </label>
-                <input
-                    type="email"
-                    name="email"
-                    value="{{ old('email', $request->email) }}"
-                    required
-                    autofocus
-                    autocomplete="username"
-                    placeholder="you@example.com"
-                    class="w-full rounded-lg border border-gray-300 px-4 py-2
-                           focus:border-blue-500 focus:ring-2 focus:ring-blue-200
-                           outline-none transition"
-                >
+                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Email Address</label>
+                <div class="relative">
+                    <i class="fas fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="email" name="email" value="{{ old('email', $request->email) }}" required autofocus autocomplete="username"
+                        placeholder="you@example.com"
+                        class="w-full rounded-lg border border-slate-300 pl-10 pr-4 py-2.5 text-sm text-slate-800 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 outline-none transition">
+                </div>
                 @error('email')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
-            <!-- New Password -->
-            <div class="relative">
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                    New Password
-                </label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    required
-                    autocomplete="new-password"
-                    placeholder="Enter new password"
-                    class="w-full rounded-lg border border-gray-300 px-4 py-2 pr-10
-                           focus:border-blue-500 focus:ring-2 focus:ring-blue-200
-                           outline-none transition"
-                >
-                <i
-                    class="fa-solid fa-eye absolute right-3 top-9 text-gray-500 cursor-pointer hover:text-gray-700"
-                    onclick="togglePassword('password', this)"
-                ></i>
-
+            <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-1.5">New Password</label>
+                <div class="relative">
+                    <i class="fas fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="password" id="password" name="password" required autocomplete="new-password"
+                        placeholder="Enter new password"
+                        class="w-full rounded-lg border border-slate-300 pl-10 pr-10 py-2.5 text-sm text-slate-800 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 outline-none transition">
+                    <i class="fa-solid fa-eye absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 cursor-pointer hover:text-slate-600 text-sm"
+                        onclick="togglePassword('password', this)"></i>
+                </div>
                 @error('password')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
-            <!-- Confirm Password -->
-            <div class="relative">
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                    Confirm Password
-                </label>
-                <input
-                    type="password"
-                    id="password_confirmation"
-                    name="password_confirmation"
-                    required
-                    autocomplete="new-password"
-                    placeholder="Confirm new password"
-                    class="w-full rounded-lg border border-gray-300 px-4 py-2 pr-10
-                           focus:border-blue-500 focus:ring-2 focus:ring-blue-200
-                           outline-none transition"
-                >
-                <i
-                    class="fa-solid fa-eye absolute right-3 top-9 text-gray-500 cursor-pointer hover:text-gray-700"
-                    onclick="togglePassword('password_confirmation', this)"
-                ></i>
-
+            <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Confirm Password</label>
+                <div class="relative">
+                    <i class="fas fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="password" id="password_confirmation" name="password_confirmation" required autocomplete="new-password"
+                        placeholder="Confirm new password"
+                        class="w-full rounded-lg border border-slate-300 pl-10 pr-10 py-2.5 text-sm text-slate-800 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 outline-none transition">
+                    <i class="fa-solid fa-eye absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 cursor-pointer hover:text-slate-600 text-sm"
+                        onclick="togglePassword('password_confirmation', this)"></i>
+                </div>
                 @error('password_confirmation')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
-            <!-- Submit -->
-            <button
-                type="submit"
-                class="w-full bg-slate-400 text-white py-2 font-semibold
-                       hover:bg-slate-500 transition"
-            >
+            <button type="submit"
+                class="w-full bg-indigo-600 text-white py-2.5 rounded-lg font-semibold hover:bg-indigo-700 shadow-lg shadow-indigo-600/25 transition">
                 Reset Password
             </button>
 
-            <!-- Back to Login -->
-            <div class="text-center pt-4">
-                <a href="{{ route('login') }}"
-                   class="text-sm text-blue-600 hover:text-blue-800 transition hover:underline">
-                    ← Back to Login
+            <div class="text-center">
+                <a href="{{ route('login') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-700 hover:underline">
+                    <i class="fas fa-arrow-left mr-1 text-xs"></i> Back to Login
                 </a>
             </div>
-
         </form>
     </div>
 
-    <!-- Toggle Password Script -->
     <script>
         function togglePassword(fieldId, icon) {
             const input = document.getElementById(fieldId);
@@ -141,4 +96,5 @@
     </script>
 
 </body>
+
 </html>

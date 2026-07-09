@@ -4,15 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title') | Trusted Solutions for Modern Businesses</title>
+    <title>@yield('title', 'Home') | Trusted Solutions for Modern Businesses</title>
 
-    <!-- AOS Jquery -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <link rel="icon" type="image/png" href="{{ asset('assets/images/others/busybeesfvicon.png') }}">
 
-    <!-- Tailwind CSS CDN -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -20,7 +17,7 @@
             darkMode: 'class',
         }
     </script>
-    <!-- css -->
+
     <style>
         html {
             overflow-x: hidden;
@@ -39,32 +36,25 @@
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
-
-        .nav-link.active {
-            color: #f59e0b;
-            text-decoration: underline;
-            text-underline-offset: 6px;
-            text-decoration-thickness: 2px;
-        }
-
     </style>
 
+    @stack('styles')
 </head>
 
 <body class="bg-zinc-50 text-zinc-800 antialiased">
-
     @include('Frontend.partials.header')
 
-    @yield('content')
+    <main>
+        @yield('content')
+    </main>
 
     @include('Frontend.partials.footer')
 
-    <!-- AOS Jquery -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init();
     </script>
-
+    @stack('scripts')
 </body>
 
 </html>

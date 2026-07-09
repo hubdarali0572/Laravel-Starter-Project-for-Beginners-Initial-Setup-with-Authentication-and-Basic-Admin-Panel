@@ -8,9 +8,14 @@
         </a>
 
         <div class="hidden md:flex items-center gap-8">
-            <a href="#features" class="text-sm font-medium text-zinc-600 hover:text-indigo-600 dark:text-zinc-400 dark:hover:text-indigo-400 transition-colors">Features</a>
-            <a href="#stack" class="text-sm font-medium text-zinc-600 hover:text-indigo-600 dark:text-zinc-400 dark:hover:text-indigo-400 transition-colors">Tech Stack</a>
-            <a href="#get-started" class="text-sm font-medium text-zinc-600 hover:text-indigo-600 dark:text-zinc-400 dark:hover:text-indigo-400 transition-colors">Get Started</a>
+            <a href="{{ route('home') }}"
+                class="text-sm font-medium {{ request()->routeIs('home') ? 'text-indigo-600 dark:text-indigo-400' : 'text-zinc-600 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400' }} transition-colors">Home</a>
+            <a href="{{ route('about') }}"
+                class="text-sm font-medium {{ request()->routeIs('about') ? 'text-indigo-600 dark:text-indigo-400' : 'text-zinc-600 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400' }} transition-colors">About
+                Us</a>
+            <a href="{{ route('contact') }}"
+                class="text-sm font-medium {{ request()->routeIs('contact') ? 'text-indigo-600 dark:text-indigo-400' : 'text-zinc-600 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400' }} transition-colors">Contact
+                Us</a>
         </div>
 
         <div class="flex items-center gap-3">

@@ -7,6 +7,7 @@ use App\Models\StudentContact;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
+use Spatie\Permission\Models\Role;
 
 class DashboardController extends Controller
 {
@@ -17,10 +18,11 @@ class DashboardController extends Controller
     {
 
         $userTotal = User::count();
-        $admissionRequest =StudentAdmission::count();
-        $contactStudent= StudentContact::count(); 
-    
-       return view('dashboard',compact('userTotal','admissionRequest','contactStudent'));
+        $admissionRequest = StudentAdmission::count();
+        $contactStudent = StudentContact::count();
+        $rolesTotal = Role::count();
+
+        return view('dashboard', compact('userTotal', 'admissionRequest', 'contactStudent', 'rolesTotal'));
     }
 
     /**
@@ -74,9 +76,17 @@ class DashboardController extends Controller
   
 public function activitylog()
 {
-    // Fetch logs, eager load the causer (the person who did the action)
-    $logs = Activity::with('causer')->latest()->paginate(20);
+    $logs = Activity::with('causer')->latest()->get();
 
     return view('activitylog', compact('logs'));
-}   
+}
+
+public function destroyActivityLog(Activity $activity)
+{
+    $activity->delete();
+
+    return redirect()
+        ->route('activitylog.activitylog')
+        ->with('success', 'Activity log deleted successfully.');
+}
 }

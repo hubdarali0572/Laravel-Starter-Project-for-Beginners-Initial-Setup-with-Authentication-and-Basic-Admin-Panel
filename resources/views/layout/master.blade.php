@@ -19,16 +19,25 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- FontAwesome -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Alpine.js -->
   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- Apply saved theme early to avoid flash -->
+  <script>
+    (function () {
+      if (localStorage.getItem('admin-theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
 
   <!-- CSRF Token -->
   <meta name="_token" content="{{ csrf_token() }}">
@@ -39,8 +48,9 @@
 
   @stack('plugin-styles')
 
-  <!-- Common CSS (optional, for your app.css overrides) -->
+  <!-- Common CSS -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
+  <link href="{{ asset('css/admin-theme.css') }}?v={{ filemtime(public_path('css/admin-theme.css')) }}" rel="stylesheet" />
   <style>
     html,
     body {
@@ -94,6 +104,14 @@
   <!-- plugin js -->
   @stack('plugin-scripts')
   <!-- end plugin js -->
+
+  <!-- theme toggle -->
+  <script>
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('admin-theme', isDark ? 'dark' : 'light');
+    }
+  </script>
 
   <!-- common js -->
   <script src="{{ asset('assets/js/template.js') }}"></script>

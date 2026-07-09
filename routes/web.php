@@ -16,6 +16,8 @@ Route::get('/admin', function () {
 });
 
 Route::get('/', [FrontendController::class, 'home'])->name('home');
+Route::get('/about-us', [FrontendController::class, 'about'])->name('about');
+Route::get('/contact-us', [FrontendController::class, 'contact'])->name('contact');
 Route::post('/contact-submit', [FrontendController::class, 'send'])->name('contact.send');
 Route::post('/apply', [FrontendController::class, 'sendRegistration'])->name('student.register');
 
@@ -37,8 +39,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     // Activity Log Route
-    
-   Route::get('activity-logs', [DashboardController::class, 'activitylog'])->name('activitylog.activitylog');
+    Route::get('activity-logs', [DashboardController::class, 'activitylog'])->name('activitylog.activitylog');
+    Route::delete('activity-logs/{activity}', [DashboardController::class, 'destroyActivityLog'])->name('activitylog.destroy');
 });
 
 

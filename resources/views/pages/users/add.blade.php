@@ -1,4 +1,8 @@
 @extends('layout.master')
+
+@section('title', 'Add User')
+@section('subtitle', 'Create a new account')
+
 @push('plugin-styles')
     <link href="{{ asset('assets/plugins/select2/select2.min.css') }}" rel="stylesheet" />
 @endpush
@@ -6,41 +10,39 @@
 @section('content')
     @include('includes.messages')
 
-    <h1 class="text-lg font-semibold mb-2">Add The User</h1>
-    <div class="row">
-        <div class="col-md-12 grid-margin">
-            <div class="card">
-                <div class="card-body">
-                    <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="row">
-                            <div class="col-12 col-md-6 col-lg-6  mb-3">
-                                <label for="name" class="form-label"><strong>Name</strong> <span class="text-red-600">*</span></label>
-                                <input id="name" class="form-control border border-secondary" name="name" value="{{old('name')}}" type="text"
-                                    placeholder="Please Enter the Name">
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6  mb-3">
-                                <label for="email" class="form-label"><strong>Email</strong> <span class="text-red-600">*</span></label>
-                                <input type="email" name="email" id="email" class="form-control border border-secondary" value="{{old('email')}}"
-                                    placeholder="Please Enter the Email">
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-12  mb-3">
-                                <label for="password" class="form-label"><strong>Password</strong>  <span class="text-red-600">*</span></label>
-                                <input type="password" name="password" id="password"  class="form-control border border-secondary" value="{{old('password')}}"
-                                    placeholder="Please Enter the Password" >
-                            </div>
+    <div class="card admin-form-card">
+        <div class="card-body">
+            <h6 class="admin-form-section-title">
+                <i class="fas fa-user-plus"></i> User Information
+            </h6>
 
-                           <div class="flex justify-center items-start mt-4 gap-2">
-                                    <a href="{{ route('users.index') }}" class="btn bg-slate-200 text-dark hover:bg-slate-200  font-semibold">Cancel</a>
-                                    <button type="submit"  class="btn bg-slate-200 text-dark hover:bg-slate-200 text-dark font-semibold">Submit</button>
-                            </div>
-                        </div>
-                    </form>
+            <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col-12 col-md-6 mb-3">
+                        <label for="name" class="admin-form-label">Name <span class="required">*</span></label>
+                        <input id="name" class="form-control admin-form-control" name="name"
+                            value="{{ old('name') }}" type="text" placeholder="Enter full name">
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                        <label for="email" class="admin-form-label">Email <span class="required">*</span></label>
+                        <input type="email" name="email" id="email" class="form-control admin-form-control"
+                            value="{{ old('email') }}" placeholder="Enter email address">
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label for="password" class="admin-form-label">Password <span class="required">*</span></label>
+                        <input type="password" name="password" id="password" class="form-control admin-form-control"
+                            placeholder="Enter password">
+                    </div>
                 </div>
-            </div>
+
+                @include('includes.admin.form-actions', [
+                    'cancelUrl' => route('users.index'),
+                    'submitLabel' => 'Create User',
+                ])
+            </form>
         </div>
     </div>
-
 @endsection
 
 @push('plugin-scripts')

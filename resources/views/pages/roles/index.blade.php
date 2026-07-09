@@ -1,98 +1,82 @@
 @extends('layout.master')
 
-@push('plugin-styles')
-  <link href="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}" rel="stylesheet" />
-@endpush
+@section('title', 'Roles & Permissions')
+@section('subtitle', 'Manage access control')
 
 @push('plugin-styles')
-  <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
 @endpush
-
 
 @section('content')
-  @include('includes.messages')
+    @include('includes.messages')
 
+    @include('includes.admin.page-toolbar', [
+        'actionUrl' => route('roles.create'),
+        'actionLabel' => 'Add Role',
+        'actionPermission' => 'create role',
+    ])
 
-  <div class="flex justify-between items-center mb-2">
-    <h4 class="text-lg font-semibold">Listing of Roles</h4>
-    @can('create role')
-      <a href="{{ route('roles.create') }}" class="btn bg-slate-200 text-dark hover:bg-slate-200 text-dark font-semibold">
-        Add Role
-      </a>
-    @endcan
-  </div>
-
-  <div class="row">
-    <div class="col-md-12 grid-margin stretch-card">
-      <div class="card">
+    <div class="card admin-table-card">
         <div class="card-body">
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Id</th>
-                  <th>Name</th>
-                  <th class="text-center">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach($roles as $role)
-                  <tr>
-                    <td class="py-1">{{ $role->id }}</td>
-                    <td class="py-1">{{ $role->name}}</td>
-                    <td class="py-1">
-                      <div class="d-flex justify-content-center align-items-center gap-1">
-
-                        @can('show role')
-                          <a href="{{ route('assign.role', $role->id) }}" class="btn bg-slate-200 text-dark hover:bg-slate-200 text-dark font-semibold  text-md px-2 py-2" title="Assign Role">
-                            <i class="fas fa-user-shield text-orange-300"></i>
-                          </a>
-                        @endcan
-
-                        @can('edit role')
-                          <a href="{{ route('roles.edit', $role->id) }}" class="btn bg-slate-200 text-dark hover:bg-slate-200 text-dark font-semibold  text-md px-2 py-2" title="Edit Role">
-                            <i class="fas fa-edit text-green-500"></i>
-                          </a>
-                        @endcan
-
-                        @can('delete role')
-                          <form id="delete-form-{{ $role->id }}" action="{{ route('roles.destroy', $role->id) }}"
-                            method="POST" class="d-inline m-0 p-0">
-                            @csrf
-                            @method('DELETE')
-                            <button type="button" onclick="confirmDelete({{ $role->id }})" class="btn bg-slate-200 text-dark hover:bg-slate-200 text-dark font-semibold  text-md px-2 py-2 " title="Delete Role">
-                              <i class="fas fa-trash text-red-600"></i>
-                            </button>
-                          </form>
-                        @endcan
-
-                      </div>
-                    </td>
-                  </tr>
-                @endforeach
-              </tbody>
-            </table>
-          </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Role Name</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($roles as $role)
+                            <tr>
+                                <td class="text-slate-500 font-mono text-sm">#{{ $role->id }}</td>
+                                <td class="font-semibold text-slate-700">{{ $role->name }}</td>
+                                <td>
+                                    <div class="admin-table-actions">
+                                        @can('show role')
+                                            <a href="{{ route('assign.role', $role->id) }}"
+                                                class="admin-btn-icon admin-btn-icon-assign" title="Assign Role">
+                                                <i class="fas fa-user-shield text-xs"></i>
+                                            </a>
+                                        @endcan
+                                        @can('edit role')
+                                            <a href="{{ route('roles.edit', $role->id) }}"
+                                                class="admin-btn-icon admin-btn-icon-edit" title="Edit">
+                                                <i class="fas fa-pen text-xs"></i>
+                                            </a>
+                                        @endcan
+                                        @can('delete role')
+                                            <form id="delete-form-{{ $role->id }}"
+                                                action="{{ route('roles.destroy', $role->id) }}" method="POST"
+                                                class="d-inline m-0 p-0">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button"
+                                                    class="admin-btn-icon admin-btn-icon-delete js-confirm-delete"
+                                                    title="Delete"
+                                                    data-delete-id="{{ $role->id }}"
+                                                    data-delete-name="{{ $role->name }}">
+                                                    <i class="fas fa-trash text-xs"></i>
+                                                </button>
+                                            </form>
+                                        @endcan
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-
 @endsection
 
-<script src="{{ asset('assets/js/sweet-alert.js') }}"></script>
-<script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
-
 @push('plugin-scripts')
-  <script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
-  <script src="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js') }}"></script>
-
-@endpush
-
-@push('plugin-scripts')
-  <script src="{{ asset('assets/js/data-table.js') }}"></script>
-  <script src="{{ asset('assets/plugins/select2/select2.min.js') }}"></script>
-
-  <script src="{{ asset('assets/js/sweet-alert.js') }}"></script>
-
+    <script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js') }}"></script>
+    <script src="{{ asset('assets/js/data-table.js') }}"></script>
+    <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('assets/js/sweet-alert.js') }}"></script>
 @endpush

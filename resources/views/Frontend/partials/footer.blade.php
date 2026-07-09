@@ -14,10 +14,11 @@
             </div>
 
             <div>
-                <h4 class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4">Platform</h4>
+                <h4 class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4">Pages</h4>
                 <ul class="space-y-2 text-sm">
-                    <li><a href="#features" class="text-zinc-600 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Features</a></li>
-                    <li><a href="#stack" class="text-zinc-600 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Tech Stack</a></li>
+                    <li><a href="{{ route('home') }}" class="text-zinc-600 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Home</a></li>
+                    <li><a href="{{ route('about') }}" class="text-zinc-600 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">About Us</a></li>
+                    <li><a href="{{ route('contact') }}" class="text-zinc-600 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Contact Us</a></li>
                     @guest
                         <li><a href="{{ route('login') }}" class="text-zinc-600 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Sign In</a></li>
                         <li><a href="{{ route('register') }}" class="text-zinc-600 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Register</a></li>
