@@ -15,7 +15,7 @@ use Spatie\Activitylog\Models\Activity;
 //  (User Email Verification other functionality completed only this added only)
 //  class User extends Authenticatable  == > class User extends Authenticatable implements MustVerifyEmail
 
-class User extends Authenticatable
+class User extends Authenticatable  implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles, LogsActivity;
